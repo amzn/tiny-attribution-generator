@@ -21,7 +21,10 @@ export default class JSONSource implements MetadataSource {
   constructor(json: string) {
     const content = JSON.parse(json);
     const packages = content.packages as Package[];
-    const pkgkv = packages.map<[string, Package]>((p) => [`${p.name} ${p.version}`, p]);
+    const pkgkv = packages.map<[string, Package]>(p => [
+      `${p.name} ${p.version}`,
+      p,
+    ]);
     this.packageMap = new Map(pkgkv);
   }
 

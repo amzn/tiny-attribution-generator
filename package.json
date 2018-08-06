@@ -11,9 +11,9 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "tsc",
-    "lint": "prettier -l '**/*.ts' 'examples/**/*.{js,ts}'",
-    "lint:fix": "prettier --write '**/*.ts' 'examples/**/*.{js,ts}'",
-    "test": "jest"
+    "lint": "prettier -l '**/*.{js,ts}' 'examples/**/*.{js,ts}' '!lib/**/*'",
+    "lint:fix": "prettier --write '**/*.{js,ts}' 'examples/**/*.{js,ts}' '!lib/**/*'",
+    "test": "npm run build && jest"
   },
   "dependencies": {
     "handlebars": "^4.0.11",

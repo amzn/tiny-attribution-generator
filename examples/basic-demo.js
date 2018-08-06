@@ -13,8 +13,10 @@
  */
 
 const DocBuilder = require('tiny-attribution-generator').default;
-const TextRenderer = require('tiny-attribution-generator/lib/outputs/text').default;
-const JSONSource = require('tiny-attribution-generator/lib/inputs/json').default;
+const TextRenderer = require('tiny-attribution-generator/lib/outputs/text')
+  .default;
+const JSONSource = require('tiny-attribution-generator/lib/inputs/json')
+  .default;
 
 const renderer = new TextRenderer();
 const builder = new DocBuilder(renderer);
