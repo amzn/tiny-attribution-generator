@@ -1,0 +1,7 @@
+*.md
+*.ts
+/*.js
+/*.json
+/*.yml
+/examples/
+/*.tgz
