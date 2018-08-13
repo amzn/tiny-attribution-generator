@@ -43,8 +43,8 @@ export default class TextRenderer implements OutputRenderer<string> {
         let statement = `** ${pkg.name}; version ${pkg.version} -- ${
           pkg.website
         }`;
-        if (pkg.copyright) {
-          statement += `\n${pkg.copyright}`;
+        if (pkg.copyrights && pkg.copyrights.length) {
+          statement += `\n${pkg.copyrights.join('\n')}`;
         }
 
         this.startAnnotation('package', { uuid: pkg.uuid });

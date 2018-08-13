@@ -44,7 +44,7 @@ export default class JSONSource implements MetadataSource {
         website: p.website,
         license: p.license,
         text: p.text,
-        copyright: p.copyright,
+        copyrights: p.copyrights,
         extra: p.extra,
       })),
     });

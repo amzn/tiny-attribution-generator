@@ -27,6 +27,7 @@ const packageData = JSON.stringify({
       name: 'Test Package',
       version: '1.0',
       license: 'MIT',
+      copyrights: ['Copyright (c) Test Package author']
     },
   ],
 });

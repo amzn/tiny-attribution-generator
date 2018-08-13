@@ -19,7 +19,7 @@ export interface Package {
   website?: string;
   license?: string;
   text?: string;
-  copyright?: string;
+  copyrights?: string[];
   extra?: any;
 }
 

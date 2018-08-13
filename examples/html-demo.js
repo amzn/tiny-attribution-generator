@@ -17,7 +17,7 @@ const packageData = JSON.stringify({
       version: '1.0.4',
       license: 'MIT',
       website: 'https://github.com/testpackage/aabb',
-      copyright: 'Copyright (c) Test copyright'
+      copyrights: ['Copyright (c) Test copyright']
     },
     {
       name: 'bbcc',
@@ -30,7 +30,7 @@ const packageData = JSON.stringify({
       version: '1.3.4',
       license: 'MIT',
       website: 'https://github.com/testpackage/ccdd',
-      copyright: 'Copyright the holder'
+      copyrights: ['Copyright the holder', 'Copyright the other holder']
     },
   ],
 });
