@@ -33,8 +33,12 @@ export default class HtmlRenderer implements OutputRenderer<string> {
           this.lines.push(`<p><a href="${pkg.website}">${pkg.website}</a></p>`);
         }
 
-        if (pkg.copyright) {
-          this.lines.push(`<p>${this.encodeAngleBrackets(pkg.copyright)}</p>`);
+        if (pkg.copyrights && pkg.copyrights.length) {
+          this.lines.push('<ul>')
+          for (const copyright of pkg.copyrights) {
+            this.lines.push(`<li>${this.encodeAngleBrackets(copyright)}</li>`);
+          }
+          this.lines.push('</ul>')
         }
 
         this.lines.push(`<pre>${this.encodeAngleBrackets(bucket.text)}</pre>`);
