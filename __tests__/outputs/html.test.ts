@@ -140,3 +140,34 @@ test('should encode angle brackets in license', () => {
 
 const htmlFrame = (content: string) =>
   `<!doctype html><html lang="en"><head><title>OSS Attribution</title><style>pre{white-space:pre-wrap;background:#eee;padding:24px}</style></head><body><h1>OSS Attribution</h1>${content}</body></html>`;
+
+test('should render custom template', () => {
+  const htmlRenderer = new HtmlRenderer('NOTHING');
+  const output = htmlRenderer.render([]);
+  expect(output).toBe('NOTHING');
+});
+
+test('should list names for custom template', () => {
+  const template =
+    '{{#buckets}}{{#packages}} {{name}} {{/packages}}{{/buckets}}';
+  const htmlRenderer = new HtmlRenderer(template);
+  const licenseBuckets = [
+    {
+      id: '',
+      text: '',
+      tags: [],
+      packages: [
+        {
+          name: 'package1',
+          version: '1.0.0',
+        },
+        {
+          name: 'package2',
+          version: '1.0.0',
+        },
+      ],
+    },
+  ];
+  const output = htmlRenderer.render(licenseBuckets);
+  expect(output).toBe('package1 package2');
+});

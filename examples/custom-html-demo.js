@@ -5,7 +5,7 @@ const DocBuilder = require('../lib/docbuilder').default;
 const HtmlRenderer = require('../lib/outputs/html').default;
 const JSONSource = require('../lib/inputs/json').default;
 
-const renderer = new HtmlRenderer();
+const renderer = new HtmlRenderer(exampleTemplate());
 const builder = new DocBuilder(renderer);
 
 const packageData = JSON.stringify({
@@ -39,3 +39,30 @@ builder.read(source);
 const output = builder.build();
 
 console.log(output);
+
+function exampleTemplate() {
+  return '<!doctype html>\
+  <html>\
+  <head>\
+    <title>NOTICES</title>\
+  </head>\
+  <body>\
+    <h1>NOTICES</h1>\
+    <ul>\
+    {{#buckets}}\
+        <h2>{{name}}</h2>\
+        <ul>\
+        {{#packages}}\
+          <li>\
+            {{name}} - {{version}} - {{website}}\
+            {{#copyrights}}\
+              {{this}} \
+            {{/copyrights}}\
+          </li>\
+        {{/packages}}\
+        </ul>\
+    {{/buckets}}\
+    </ul>\
+  </body\
+  </html>';
+}
