@@ -87,6 +87,32 @@ test('should render copyrights', () => {
   expect(output).toBe(htmlFrame(expected));
 });
 
+test('should not render copyrights wrapper when empty', () => {
+  const htmlRenderer = new HtmlRenderer();
+  const licenseBuckets = [
+    {
+      id: '1',
+      text: 'license text',
+      name: 'LIC',
+      tags: [],
+      packages: [
+        {
+          name: 'package1',
+          version: '1.0.0',
+          copyrights: [],
+        },
+      ],
+    },
+  ];
+  const output = htmlRenderer.render(licenseBuckets);
+  const expected =
+    '<ol>\
+<li><details><summary>package1 1.0.0 - LIC</summary>\
+<pre>license text</pre></details></li>\
+</ol>';
+  expect(output).toBe(htmlFrame(expected));
+});
+
 test('should encode angle brackets in license', () => {
   const htmlRenderer = new HtmlRenderer();
   const licenseBuckets = [
@@ -113,4 +139,4 @@ test('should encode angle brackets in license', () => {
 });
 
 const htmlFrame = (content: string) =>
-  `<!doctype html><html lang="en"><head><title>OSS Attribution</title><style>pre { white-space: pre-wrap; background: #eee; padding: 24px;}</style></head><body><h1>OSS Attribution</h1>${content}</body></html>`;
+  `<!doctype html><html lang="en"><head><title>OSS Attribution</title><style>pre{white-space:pre-wrap;background:#eee;padding:24px}</style></head><body><h1>OSS Attribution</h1>${content}</body></html>`;
