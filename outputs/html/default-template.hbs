@@ -9,6 +9,10 @@
       background: #eee;
       padding: 24px;
     }
+
+    ol ol {
+      list-style-type: lower-alpha;
+    }
   </style>
 </head>
 
@@ -16,24 +20,29 @@
   <h1>OSS Attribution</h1>
   <ol>
     {{#buckets}}
-    {{#packages}}
     <li>
-      <details>
-        <summary>{{name}} {{version}} - {{../name}}</summary>
-        {{#if website}}
-        <p><a href="{{website}}">{{website}}</a></p>
-        {{/if}}
-        {{#if copyrights}}
-        <ul>
-          {{#copyrights}}
-          <li>{{this}}</li>
-          {{/copyrights}}
-        </ul>
-        {{/if}}
-        <pre>{{../text}}</pre>
-      </details>
+      <h2>{{name}}</h2>
+      <ol>
+        {{#packages}}
+        <li>
+          <details>
+            <summary>{{name}} {{version}}</summary>
+            {{#if website}}
+            <p><a href="{{website}}">{{website}}</a></p>
+            {{/if}}
+            {{#if copyrights}}
+            <ul>
+              {{#copyrights}}
+              <li>{{this}}</li>
+              {{/copyrights}}
+            </ul>
+            {{/if}}
+          </details>
+        </li>
+        {{/packages}}
+      </ol>
+      <pre>{{text}}</pre>
     </li>
-    {{/packages}}
     {{/buckets}}
   </ol>
 </body>
