@@ -17,7 +17,7 @@ interface Annotation {
 export default class DocBuilder {
   private buckets = new Map<string, LicenseBucket>();
 
-  constructor(private renderer: OutputRenderer<string>) {}
+  constructor(private renderer: OutputRenderer<any>) {}
 
   addPackage(pkg: Package) {
     // add an identifier if not present
