@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>OSS Attribution</title>
+  <style>
+    pre {
+      white-space: pre-wrap;
+      background: #eee;
+      padding: 24px;
+    }
+
+    ol ol {
+      list-style-type: lower-alpha;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>OSS Attribution</h1>
+  <ol>
+    {{#buckets}}
+    <li>
+      <h2>{{name}}</h2>
+      <ol>
+        {{#packages}}
+        <li>
+          <details>
+            <summary>{{name}} {{version}}</summary>
+            {{#if website}}
+            <p><a href="{{website}}">{{website}}</a></p>
+            {{/if}}
+            {{#if copyrights}}
+            <ul>
+              {{#copyrights}}
+              <li>{{this}}</li>
+              {{/copyrights}}
+            </ul>
+            {{/if}}
+          </details>
+        </li>
+        {{/packages}}
+      </ol>
+      <pre>{{text}}</pre>
+    </li>
+    {{/buckets}}
+  </ol>
+</body>
+
+</html>

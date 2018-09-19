@@ -22,8 +22,13 @@ test('should render html doc', () => {
   const output = htmlRenderer.render(licenseBuckets);
   const expected =
     '<ol>\
-<li><details><summary>package1 1.0.0 - LIC</summary><pre>license text</pre></details></li>\
+<li><h2>LIC</h2>\
+<ol>\
+<li><details><summary>package1 1.0.0</summary></details></li>\
+</ol>\
+<pre>license text</pre></li>\
 </ol>';
+
   expect(output).toBe(htmlFrame(expected));
 });
 
@@ -51,11 +56,15 @@ test('should render website if present', () => {
   const output = htmlRenderer.render(licenseBuckets);
   const expected =
     '<ol>\
-<li><details><summary>package1 1.0.0 - LIC</summary>\
+<li><h2>LIC</h2>\
+<ol>\
+<li>\
+<details><summary>package1 1.0.0</summary>\
 <p><a href="http://example.org">http://example.org</a></p>\
-<pre>license text</pre></details></li>\
-<li><details><summary>package2 2.0.0 - LIC</summary>\
-<pre>license text</pre></details></li>\
+</details></li>\
+<li><details><summary>package2 2.0.0</summary></details></li>\
+</ol>\
+<pre>license text</pre></li>\
 </ol>';
   expect(output).toBe(htmlFrame(expected));
 });
@@ -80,9 +89,41 @@ test('should render copyrights', () => {
   const output = htmlRenderer.render(licenseBuckets);
   const expected =
     '<ol>\
-<li><details><summary>package1 1.0.0 - LIC</summary>\
+<li>\
+<h2>LIC</h2>\
+<ol>\
+<li><details><summary>package1 1.0.0</summary>\
 <ul><li>Copyright (c) holder</li></ul>\
-<pre>license text</pre></details></li>\
+</details></li>\
+</ol>\
+<pre>license text</pre></li>\
+</ol>';
+  expect(output).toBe(htmlFrame(expected));
+});
+
+test('should not render copyrights wrapper when empty', () => {
+  const htmlRenderer = new HtmlRenderer();
+  const licenseBuckets = [
+    {
+      id: '1',
+      text: 'license text',
+      name: 'LIC',
+      tags: [],
+      packages: [
+        {
+          name: 'package1',
+          version: '1.0.0',
+          copyrights: [],
+        },
+      ],
+    },
+  ];
+  const output = htmlRenderer.render(licenseBuckets);
+  const expected =
+    '<ol>\
+<li><h2>LIC</h2>\
+<ol><li><details><summary>package1 1.0.0</summary></details></li></ol>\
+<pre>license text</pre></li>\
 </ol>';
   expect(output).toBe(htmlFrame(expected));
 });
@@ -106,11 +147,43 @@ test('should encode angle brackets in license', () => {
   const output = htmlRenderer.render(licenseBuckets);
   const expected =
     '<ol>\
-<li><details><summary>package1 1.0.0 - LIC</summary>\
-<pre>license text &lt;placeholder&gt;</pre></details></li>\
+<li><h2>LIC</h2>\
+<ol><li><details><summary>package1 1.0.0</summary></details></li></ol>\
+<pre>license text &lt;placeholder&gt;</pre></li>\
 </ol>';
   expect(output).toBe(htmlFrame(expected));
 });
 
 const htmlFrame = (content: string) =>
-  `<!doctype html><html lang="en"><head><title>OSS Attribution</title><style>pre { white-space: pre-wrap; background: #eee; padding: 24px;}</style></head><body><h1>OSS Attribution</h1>${content}</body></html>`;
+  `<!doctype html><html lang="en"><head><title>OSS Attribution</title><style>pre{white-space:pre-wrap;background:#eee;padding:24px}ol ol{list-style-type:lower-alpha}</style></head><body><h1>OSS Attribution</h1>${content}</body></html>`;
+
+test('should render custom template', () => {
+  const htmlRenderer = new HtmlRenderer('NOTHING');
+  const output = htmlRenderer.render([]);
+  expect(output).toBe('NOTHING');
+});
+
+test('should list names for custom template', () => {
+  const template =
+    '{{#buckets}}{{#packages}} {{name}} {{/packages}}{{/buckets}}';
+  const htmlRenderer = new HtmlRenderer(template);
+  const licenseBuckets = [
+    {
+      id: '',
+      text: '',
+      tags: [],
+      packages: [
+        {
+          name: 'package1',
+          version: '1.0.0',
+        },
+        {
+          name: 'package2',
+          version: '1.0.0',
+        },
+      ],
+    },
+  ];
+  const output = htmlRenderer.render(licenseBuckets);
+  expect(output).toBe('package1 package2');
+});
