@@ -34,11 +34,11 @@ const packageData = JSON.stringify({
 });
 
 const source = new JSONSource(packageData);
-builder.read(source);
+builder.read(source).then(() => {
+  const output = builder.build();
 
-const output = builder.build();
-
-console.log(output);
+  console.log(output);
+});
 
 function exampleTemplate() {
   return '<!doctype html>\

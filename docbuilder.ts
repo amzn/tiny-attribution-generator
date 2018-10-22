@@ -66,9 +66,8 @@ export default class DocBuilder {
     this.buckets.set(id, bucket);
   }
 
-  read(source: MetadataSource) {
-    const packages = source.listPackages();
-
+  async read(source: MetadataSource) {
+    const packages = await source.listPackages();
     for (const packageId of packages) {
       const pkg = source.getPackage(packageId)!;
 

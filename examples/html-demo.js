@@ -34,8 +34,7 @@ const packageData = JSON.stringify({
 });
 
 const source = new JSONSource(packageData);
-builder.read(source);
-
-const output = builder.build();
-
-console.log(output);
+builder.read(source).then(() => {
+  const output = builder.build();
+  console.log(output);
+});

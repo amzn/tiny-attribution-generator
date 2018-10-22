@@ -31,24 +31,27 @@ const packageData = JSON.stringify({
 });
 
 const jsonSource = new JSONSource(packageData);
-jsonBuilder.read(jsonSource);
+jsonBuilder
+  .read(jsonSource)
+  .then(() => {
+    // Use the JsonRenderer to build
+    const jsonOutput = jsonBuilder.build();
 
-// Use the JsonRenderer to build
-const jsonOutput = jsonBuilder.build();
+    // Push a new package onto the output of the previous builder
+    jsonOutput.packages.push({
+      name: 'ccdd',
+      version: '2.0.0',
+      license: 'MIT',
+      website: 'https://github.com/testpackage/ccdd',
+    });
 
-// Push a new package onto the output of the previous builder
-jsonOutput.packages.push({
-  name: 'ccdd',
-  version: '2.0.0',
-  license: 'MIT',
-  website: 'https://github.com/testpackage/ccdd',
-});
+    // Build the final result with the TextRenderer
+    const nextPackageData = JSON.stringify(jsonOutput);
+    const textSource = new JSONSource(nextPackageData);
+    return textBuilder.read(textSource);
+  })
+  .then(() => {
+    const output = textBuilder.build();
 
-// Build the final result with the TextRenderer
-const nextPackageData = JSON.stringify(jsonOutput);
-const textSource = new JSONSource(nextPackageData);
-textBuilder.read(textSource);
-
-const output = textBuilder.build();
-
-console.log(output);
+    console.log(output);
+  });

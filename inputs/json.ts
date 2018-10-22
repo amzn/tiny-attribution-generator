@@ -17,7 +17,7 @@ export default class JSONSource implements MetadataSource {
     this.packageMap = new Map(pkgkv);
   }
 
-  listPackages(): string[] {
+  async listPackages(): Promise<string[]> {
     return Array.from(this.packageMap.keys());
   }
 
