@@ -4,10 +4,11 @@
 import MetadataSource from './base';
 import { Package } from '../structure';
 import request from 'request-promise-native';
+import { get } from 'lodash';
 
 export default class ClearlyDefinedSource implements MetadataSource {
   private coordinates: string[];
-  private packageMap!: Map<string, Package>;
+  private packageMap = new Map<string, Package>();
 
   constructor(json: string) {
     const content = JSON.parse(json);
@@ -46,10 +47,10 @@ export default class ClearlyDefinedSource implements MetadataSource {
           .filter(x => x)
           .join('/'),
         version: def.coordinates.revision,
-        license: def.licensed.declared || '',
-        website: def.described.projectWebsite || '',
+        license: get(def, 'licensed.declared') || '',
+        website: get(def, 'described.projectWebsite') || '',
         text: licenseText,
-        copyrights: def.licensed.facets.core.attribution.parties,
+        copyrights: get(def, 'licensed.facets.core.attribution.parties'),
       },
     ];
   }
@@ -76,8 +77,8 @@ export default class ClearlyDefinedSource implements MetadataSource {
 interface Defintion {
   name: string;
   coordinates: Coordinates;
-  licensed: Licensed;
-  described: Described;
+  licensed: any;
+  described: any;
   files: File[];
 }
 
@@ -87,15 +88,6 @@ interface Coordinates {
   namespace: string;
   name: string;
   revision: string;
-}
-
-interface Licensed {
-  declared: string;
-  facets: any;
-}
-
-interface Described {
-  projectWebsite: string;
 }
 
 interface File {
