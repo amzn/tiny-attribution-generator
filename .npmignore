@@ -3,5 +3,7 @@
 /*.js
 /*.json
 /*.yml
+/coverage/
 /examples/
 /*.tgz
+/**/__tests__/
