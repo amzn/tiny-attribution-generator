@@ -6,6 +6,6 @@ import { Package } from '../structure';
 type PackageIdentifier = string;
 
 export default interface MetadataSource {
-  listPackages(): PackageIdentifier[];
+  listPackages(): Promise<PackageIdentifier[]>;
   getPackage(id: PackageIdentifier): Package | undefined;
 }
