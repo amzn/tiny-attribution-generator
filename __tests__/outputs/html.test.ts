@@ -2,9 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import HtmlRenderer from '../../outputs/html';
+import * as fs from 'fs';
+import * as path from 'path';
 
 test('should render html doc', () => {
-  const htmlRenderer = new HtmlRenderer();
+  const htmlRenderer = new HtmlRenderer(
+    fs
+      .readFileSync(path.join(__dirname, '../../default-htmltemplate.hbs'))
+      .toString()
+  );
   const licenseBuckets = [
     {
       id: '1',
@@ -33,7 +39,11 @@ test('should render html doc', () => {
 });
 
 test('should render website if present', () => {
-  const htmlRenderer = new HtmlRenderer();
+  const htmlRenderer = new HtmlRenderer(
+    fs
+      .readFileSync(path.join(__dirname, '../../default-htmltemplate.hbs'))
+      .toString()
+  );
   const licenseBuckets = [
     {
       id: '1',
@@ -70,7 +80,11 @@ test('should render website if present', () => {
 });
 
 test('should render copyrights', () => {
-  const htmlRenderer = new HtmlRenderer();
+  const htmlRenderer = new HtmlRenderer(
+    fs
+      .readFileSync(path.join(__dirname, '../../default-htmltemplate.hbs'))
+      .toString()
+  );
   const licenseBuckets = [
     {
       id: '1',
@@ -102,7 +116,11 @@ test('should render copyrights', () => {
 });
 
 test('should not render copyrights wrapper when empty', () => {
-  const htmlRenderer = new HtmlRenderer();
+  const htmlRenderer = new HtmlRenderer(
+    fs
+      .readFileSync(path.join(__dirname, '../../default-htmltemplate.hbs'))
+      .toString()
+  );
   const licenseBuckets = [
     {
       id: '1',
@@ -129,7 +147,11 @@ test('should not render copyrights wrapper when empty', () => {
 });
 
 test('should encode angle brackets in license', () => {
-  const htmlRenderer = new HtmlRenderer();
+  const htmlRenderer = new HtmlRenderer(
+    fs
+      .readFileSync(path.join(__dirname, '../../default-htmltemplate.hbs'))
+      .toString()
+  );
   const licenseBuckets = [
     {
       id: '1',
