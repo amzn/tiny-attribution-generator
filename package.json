@@ -1,6 +1,6 @@
 {
   "name": "tiny-attribution-generator",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "An open source attribution document (credits screen) generator",
   "author": "Jacob Peddicord <peddicor@amazon.com>",
   "license": "Apache-2.0",
@@ -13,7 +13,8 @@
     "build": "tsc",
     "lint": "prettier -l '**/*.{js,ts}' 'examples/**/*.{js,ts}' '!lib/**/*'",
     "lint:fix": "prettier --write '**/*.{js,ts}' 'examples/**/*.{js,ts}' '!lib/**/*'",
-    "test": "rm -rf lib && npm run build && jest --coverage"
+    "test": "rm -rf lib && npm run build && jest --coverage",
+    "prepack": "tsc"
   },
   "dependencies": {
     "handlebars": "^4.0.12",
