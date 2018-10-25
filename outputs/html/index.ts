@@ -14,7 +14,7 @@ export default class HtmlRenderer implements OutputRenderer<string> {
   render(buckets: LicenseBucket[]): string {
     if (!this.template) {
       this.template = fs
-        .readFileSync(path.resolve('outputs/html/default-template.hbs'))
+        .readFileSync(path.join(__dirname, '../../../default-htmltemplate.hbs'))
         .toString();
     }
     const compiler = compile(this.template);
