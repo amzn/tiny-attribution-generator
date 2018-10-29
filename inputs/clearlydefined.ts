@@ -3,7 +3,7 @@
 
 import MetadataSource from './base';
 import { Package } from '../structure';
-import request from 'request-promise-native';
+import request from 'superagent'
 import { get } from 'lodash';
 
 export default class ClearlyDefinedSource implements MetadataSource {
@@ -16,16 +16,13 @@ export default class ClearlyDefinedSource implements MetadataSource {
   }
 
   async listPackages(): Promise<string[]> {
-    const response = await request(
-      'https://api.clearlydefined.io/definitions',
-      {
-        method: 'post',
-        json: this.coordinates,
-      }
-    );
-    const keys = Object.keys(response);
+    const response = await request
+      .post('https://api.clearlydefined.io/definitions')
+      .send(this.coordinates)
+
+    const keys = Object.keys(response.body);
     const pkgkv = await Promise.all(
-      keys.map(x => this.toPackage(x, response[x]))
+      keys.map(x => this.toPackage(x, response.body[x]))
     );
     this.packageMap = new Map(pkgkv);
     return keys;
@@ -59,14 +56,9 @@ export default class ClearlyDefinedSource implements MetadataSource {
     if (!files) return;
     for (const file of files.filter(x => x.token)) {
       try {
-        const response = await request(
-          `https://api.clearlydefined.io/attachments/${file.token}`,
-          {
-            method: 'get',
-            json: false,
-          }
-        );
-        return response;
+        const response = await request
+          .get(`https://api.clearlydefined.io/attachments/${file.token}`)
+        return response.text;
       } catch (exception) {
         if (exception.statusCode !== 404) throw exception;
       }
