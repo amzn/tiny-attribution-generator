@@ -2,7 +2,7 @@
 
 A small tool and library to create attribution notices from various formats
 
-## Work In Progress!
+## *Work In Progress!*
 
 This is a project being built to extract the "document generation" piece from [oss-attribution-builder](https://github.com/amzn/oss-attribution-builder), so that you don't need a whole website & project manager just to create attribution documents.
 
