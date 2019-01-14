@@ -3,7 +3,7 @@
 
 import MetadataSource from './base';
 import { Package } from '../structure';
-import request from 'superagent'
+import request from 'superagent';
 import { get } from 'lodash';
 
 export default class ClearlyDefinedSource implements MetadataSource {
@@ -18,7 +18,7 @@ export default class ClearlyDefinedSource implements MetadataSource {
   async listPackages(): Promise<string[]> {
     const response = await request
       .post('https://api.clearlydefined.io/definitions')
-      .send(this.coordinates)
+      .send(this.coordinates);
 
     const keys = Object.keys(response.body);
     const pkgkv = await Promise.all(
@@ -54,15 +54,24 @@ export default class ClearlyDefinedSource implements MetadataSource {
 
   private async fetchLicense(files: File[]): Promise<string | undefined> {
     if (!files) return;
-    for (const file of files.filter(x => x.token)) {
+    for (const file of files.filter(this.isLicense)) {
       try {
-        const response = await request
-          .get(`https://api.clearlydefined.io/attachments/${file.token}`)
+        const response = await request.get(
+          `https://api.clearlydefined.io/attachments/${file.token}`
+        );
         return response.text;
       } catch (exception) {
         if (exception.statusCode !== 404) throw exception;
       }
     }
+  }
+  private isLicense(file: File): boolean {
+    return !!(
+      file &&
+      file.token &&
+      file.natures &&
+      file.natures.indexOf('license') > -1
+    );
   }
 }
 
@@ -84,4 +93,5 @@ interface Coordinates {
 
 interface File {
   token: string;
+  natures: string[];
 }
