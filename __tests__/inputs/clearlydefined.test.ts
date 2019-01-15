@@ -72,6 +72,7 @@ test('should get license text', async () => {
         {
           path: 'LICENSE',
           token: 'thisisatoken',
+          natures: ['license'],
         },
       ],
       coordinates: { name: 'haslicense', revision: '1.0.0' },
@@ -86,6 +87,69 @@ test('should get license text', async () => {
     version: '1.0.0',
     license: 'MIT',
     text: 'THIS IS A LICENSE',
+    copyrights: undefined,
+    website: '',
+  });
+});
+
+test('should skip file by natures', async () => {
+  const source = new ClearlyDefinedSource(
+    JSON.stringify({
+      coordinates: [
+        'npm/npmjs/-/haslicense/1.0.0',
+        'npm/npmjs/-/hasfile/1.0.0',
+      ],
+    })
+  );
+  nockDefintions({
+    'npm/npmjs/-/haslicense/1.0.0': {
+      described: {},
+      licensed: {
+        declared: 'MIT',
+      },
+      files: [
+        {
+          path: 'LICENSE',
+          token: 'thisistoken1',
+          natures: ['license'],
+        },
+      ],
+      coordinates: { name: 'haslicense', revision: '1.0.0' },
+    },
+    'npm/npmjs/-/hasfile/1.0.0': {
+      described: {},
+      licensed: {
+        declared: 'MIT',
+      },
+      files: [
+        {
+          path: 'package.json',
+          token: 'thisistoken2',
+          natures: ['manifest'],
+        },
+      ],
+      coordinates: { name: 'hasfile', revision: '1.0.0' },
+    },
+  });
+  nockAttachments('thisistoken1', 'LICENSE first one');
+
+  await source.listPackages();
+  const result1 = source.getPackage('npm/npmjs/-/haslicense/1.0.0');
+  expect(result1).toEqual({
+    name: 'haslicense',
+    version: '1.0.0',
+    license: 'MIT',
+    text: 'LICENSE first one',
+    copyrights: undefined,
+    website: '',
+  });
+
+  const result2 = source.getPackage('npm/npmjs/-/hasfile/1.0.0');
+  expect(result2).toEqual({
+    name: 'hasfile',
+    version: '1.0.0',
+    license: 'MIT',
+    text: undefined,
     copyrights: undefined,
     website: '',
   });

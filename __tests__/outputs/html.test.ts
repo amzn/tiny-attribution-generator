@@ -177,7 +177,7 @@ test('should encode angle brackets in license', () => {
 });
 
 const htmlFrame = (content: string) =>
-  `<!doctype html><html lang="en"><head><title>OSS Attribution</title><style>pre{white-space:pre-wrap;background:#eee;padding:24px}ol ol{list-style-type:lower-alpha}</style></head><body><h1>OSS Attribution</h1>${content}</body></html>`;
+  `<!DOCTYPE html><html lang="en"><head><title>OSS Attribution</title><meta charset="utf-8"><style>pre{white-space:pre-wrap;background:#eee;padding:24px}ol ol{list-style-type:lower-alpha}</style></head><body><h1>OSS Attribution</h1>${content}</body></html>`;
 
 test('should render custom template', () => {
   const htmlRenderer = new HtmlRenderer('NOTHING');
