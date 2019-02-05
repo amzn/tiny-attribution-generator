@@ -16,14 +16,16 @@ export default class ClearlyDefinedSource implements MetadataSource {
   }
 
   async listPackages(): Promise<string[]> {
-    const response = await request
-      .post('https://api.clearlydefined.io/definitions')
-      .send(this.coordinates);
-
-    const keys = Object.keys(response.body);
-    const pkgkv = await Promise.all(
-      keys.map(x => this.toPackage(x, response.body[x]))
-    );
+    const pageSize = 500;
+    let data: { [coordinates: string]: Definition } = {};
+    for (let i = 0; i < Math.ceil(this.coordinates.length / pageSize); i++) {
+      const response = await request
+        .post('https://api.clearlydefined.io/definitions')
+        .send(this.coordinates.slice(i * pageSize, i * pageSize + pageSize));
+      data = { ...data, ...response.body };
+    }
+    const keys = Object.keys(data);
+    const pkgkv = await Promise.all(keys.map(x => this.toPackage(x, data[x])));
     this.packageMap = new Map(pkgkv);
     return keys;
   }
@@ -34,7 +36,7 @@ export default class ClearlyDefinedSource implements MetadataSource {
 
   private async toPackage(
     key: string,
-    def: Defintion
+    def: Definition
   ): Promise<[string, Package]> {
     const licenseText = await this.fetchLicense(def.files);
     return [
@@ -75,7 +77,7 @@ export default class ClearlyDefinedSource implements MetadataSource {
   }
 }
 
-interface Defintion {
+interface Definition {
   name: string;
   coordinates: Coordinates;
   licensed: any;
