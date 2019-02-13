@@ -6,3 +6,4 @@
 import DocBuilder from './docbuilder';
 
 export default DocBuilder;
+export { Package } from './structure';
