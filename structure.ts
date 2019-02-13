@@ -1,7 +1,7 @@
 // Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-export interface Package {
+export interface Package<E = any> {
   uuid?: string;
   name: string;
   version: string;
@@ -9,7 +9,7 @@ export interface Package {
   license?: string;
   text?: string;
   copyrights?: string[];
-  extra?: any;
+  extra?: E;
 }
 
 export interface LicenseBucket {
