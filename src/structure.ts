@@ -12,6 +12,13 @@ export interface Package<E = any> {
   extra?: E;
 }
 
+export interface NamedLicense {
+  name: string;
+  text: string;
+  tags: string[];
+  [x: string]: any;
+}
+
 export interface LicenseBucket {
   id: string;
   name?: string;

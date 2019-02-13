@@ -8,16 +8,16 @@ import spdxLicenses from 'spdx-license-list/full';
 import { LicenseBucket, Package } from './structure';
 import OutputRenderer from './outputs/base';
 import MetadataSource from './inputs/base';
-
-interface Annotation {
-  lines: [number, number | undefined];
-  [key: string]: any;
-}
+import SPDXLicenseDictionary from './licenses/spdx';
+import LicenseDictionary from './licenses/base';
 
 export default class DocBuilder {
   private buckets = new Map<string, LicenseBucket>();
 
-  constructor(private renderer: OutputRenderer<any>) {}
+  constructor(
+    private renderer: OutputRenderer<any>,
+    private licenseDictionary: LicenseDictionary = new SPDXLicenseDictionary()
+  ) {}
 
   addPackage(pkg: Package) {
     // add an identifier if not present
@@ -27,15 +27,15 @@ export default class DocBuilder {
 
     // see if it's a known license
     const name = pkg.license;
-    const license = name ? spdxLicenses[name] : undefined;
+    const license = name ? this.licenseDictionary.get(name) : undefined;
 
     // prefer package's license text
     let text = '';
     if (pkg.text != undefined && pkg.text.length > 0) {
       text = pkg.text;
-    } else {
+    } else if (name) {
       // no provided license text => use our stored version if we have it
-      text = license != undefined ? license.licenseText : name;
+      text = license && license.text ? license.text : name;
     }
 
     // TODO: dedupe copyright strings from the license text; those should
@@ -51,7 +51,7 @@ export default class DocBuilder {
       license != undefined ? `${prefix}~${hash}` : `~${prefix}~${hash}`;
 
     // determine tags
-    const tags: string[] = license != undefined ? license.tags : ['unknown'];
+    const tags: string[] = license ? license.tags : ['unknown'];
 
     // create or add to a bucket
     const bucket = this.buckets.get(id) || {
