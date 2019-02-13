@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation and others.
 // SPDX-License-Identifier: Apache-2.0
 
-import PackageLockSource from '../../inputs/packagelock';
+import PackageLockSource from '../../src/inputs/packagelock';
 
 test('should get package by key', () => {
   const source = new PackageLockSource(`

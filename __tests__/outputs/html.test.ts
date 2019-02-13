@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation and others.
 // SPDX-License-Identifier: Apache-2.0
 
-import HtmlRenderer from '../../outputs/html';
+import HtmlRenderer from '../../src/outputs/html';
 import * as fs from 'fs';
 import * as path from 'path';
 

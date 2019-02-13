@@ -11,8 +11,8 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "tsc",
-    "lint": "prettier -l '**/*.{js,ts}' 'examples/**/*.{js,ts}' '!lib/**/*'",
-    "lint:fix": "prettier --write '**/*.{js,ts}' 'examples/**/*.{js,ts}' '!lib/**/*'",
+    "lint": "prettier -l 'src/**/*.{js,ts}' 'examples/**/*.{js,ts}'",
+    "lint:fix": "prettier --write 'src/**/*.{js,ts}' 'examples/**/*.{js,ts}'",
     "test": "rm -rf lib && npm run build && jest --coverage",
     "prepack": "tsc"
   },

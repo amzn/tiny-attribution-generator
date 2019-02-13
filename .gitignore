@@ -1,5 +1,5 @@
-node_modules
-lib
-*.tgz
 .DS_STORE
+*.tgz
 coverage/
+lib
+node_modules

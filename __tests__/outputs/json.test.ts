@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation and others.
 // SPDX-License-Identifier: Apache-2.0
 
-import JsonRenderer from '../../outputs/json';
+import JsonRenderer from '../../src/outputs/json';
 
 test('should render json', () => {
   const jsonRenderer = new JsonRenderer();

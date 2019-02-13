@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation and others.
 // SPDX-License-Identifier: Apache-2.0
 
-import JSONSource from '../../inputs/json';
+import JSONSource from '../../src/inputs/json';
 
 test('should get package by key', () => {
   const source = new JSONSource(

@@ -2,8 +2,9 @@
 *.ts
 /*.js
 /*.json
+/*.tgz
 /*.yml
+/**/__tests__/
 /coverage/
 /examples/
-/*.tgz
-/**/__tests__/
+/src/

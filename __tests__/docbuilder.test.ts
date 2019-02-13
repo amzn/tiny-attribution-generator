@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation and others.
 // SPDX-License-Identifier: Apache-2.0
 
-import DocBuilder from '../docbuilder';
-import OutputRenderer from '../outputs/base';
-import { LicenseBucket } from '../structure';
+import DocBuilder from '../src/docbuilder';
+import OutputRenderer from '../src/outputs/base';
+import { LicenseBucket } from '../src/structure';
 
 test('should bucket packages of different licenses apart', () => {
   const outputRenderer = new NameRenderer();

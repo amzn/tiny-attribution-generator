@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation and others.
 // SPDX-License-Identifier: Apache-2.0
 
-import ClearlyDefinedSource from '../../inputs/clearlydefined';
+import ClearlyDefinedSource from '../../src/inputs/clearlydefined';
 import nock from 'nock';
 
 test('should get package by key with after list call', async () => {
