@@ -17,7 +17,7 @@
     "prepack": "tsc"
   },
   "dependencies": {
-    "handlebars": "^4.0.12",
+    "handlebars": "^4.1.0",
     "html-minifier": "^3.5.20",
     "lodash": "^4.17.11",
     "spdx-license-list": "^4.1.0",
@@ -25,7 +25,6 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "@types/handlebars": "^4.0.39",
     "@types/html-minifier": "^3.5.2",
     "@types/jest": "^23.3.2",
     "@types/lodash": "^4.14.117",
