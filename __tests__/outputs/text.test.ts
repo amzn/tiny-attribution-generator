@@ -38,8 +38,24 @@ describe('text renderer', () => {
   test('has useful annotations', () => {
     const renderer = new TextRenderer();
     const output = renderer.render(buckets);
-    console.log(output)
-    console.log(renderer.annotations);
+
+    const annotations = renderer.annotations;
+    const bucketAnnotation = annotations.find(a => a.type === 'bucket');
+    const licenseAnnotation = annotations.find(a => a.type === 'license');
+
+    const lines = output.split('\n');
+
+    // the bucket should cover the whole thing (since theres only one)
+    expect(lines.length).toEqual(
+      bucketAnnotation.lines[1] - bucketAnnotation.lines[0]
+    );
+
+    // the license should contain the text, of course
+    const licenseSection = lines.slice(
+      licenseAnnotation.lines[0],
+      licenseAnnotation.lines[1]
+    );
+    expect(licenseSection.join('\n')).toEqual(buckets[0].text);
   });
 });
 
