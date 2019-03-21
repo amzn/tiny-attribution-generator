@@ -12,7 +12,7 @@ export interface Annotation {
 type AnnotationType = 'bucket' | 'license' | 'package';
 
 interface Options {
-  wrap?: number
+  wrap?: number;
 }
 
 export default class TextRenderer implements OutputRenderer<string> {
@@ -20,7 +20,7 @@ export default class TextRenderer implements OutputRenderer<string> {
   private finalAnnotations: Annotation[] = [];
   private lineNum = 0;
   private chunks: string[] = [];
-  
+
   private wrap?: number;
 
   constructor(options?: Options) {

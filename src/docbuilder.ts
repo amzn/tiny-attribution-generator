@@ -1,4 +1,4 @@
-// Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import { createHash } from 'crypto';
@@ -10,6 +10,7 @@ import MetadataSource from './inputs/base';
 import SPDXLicenseDictionary from './licenses/spdx';
 import LicenseDictionary from './licenses/base';
 
+type TextTransform = (text: string, bucket: LicenseBucket) => string;
 interface DocumentSummary {
   usedLicenses: UsedLicenseSummary;
 }
@@ -23,6 +24,7 @@ interface BucketSummary {
 
 export default class DocBuilder {
   private buckets = new Map<string, LicenseBucket>();
+  private textTransforms: TextTransform[] = [];
 
   constructor(
     private renderer: OutputRenderer<any>,
@@ -85,6 +87,10 @@ export default class DocBuilder {
     }
   }
 
+  addTextTransform(func: TextTransform) {
+    this.textTransforms.push(func);
+  }
+
   build() {
     const licenseBuckets = this.finalize();
     return this.renderer.render(licenseBuckets);
@@ -100,6 +106,17 @@ export default class DocBuilder {
         bucket.packages.sort((a, b) => a.name.localeCompare(b.name));
         return bucket;
       });
+
+    // apply any transformations to the text
+    if (this.textTransforms.length > 0) {
+      for (const bucket of this.buckets.values()) {
+        bucket.text = this.textTransforms.reduce(
+          (acc, transform) => transform(acc, bucket),
+          bucket.text
+        );
+      }
+    }
+
     return sortedBuckets;
   }
 
