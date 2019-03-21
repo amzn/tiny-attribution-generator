@@ -3,13 +3,23 @@
 
 import { createHash } from 'crypto';
 import uuidv4 from 'uuid/v4';
-import spdxLicenses from 'spdx-license-list/full';
 
 import { LicenseBucket, Package } from './structure';
 import OutputRenderer from './outputs/base';
 import MetadataSource from './inputs/base';
 import SPDXLicenseDictionary from './licenses/spdx';
 import LicenseDictionary from './licenses/base';
+
+interface DocumentSummary {
+  usedLicenses: UsedLicenseSummary;
+}
+type UsedLicenseSummary = { [bucket: string]: BucketSummary };
+interface BucketSummary {
+  name?: string;
+  text: string;
+  packages: Package[];
+  tags: string[];
+}
 
 export default class DocBuilder {
   private buckets = new Map<string, LicenseBucket>();
@@ -93,24 +103,19 @@ export default class DocBuilder {
     return sortedBuckets;
   }
 
-  get summary() {
-    const usedLicenses: any = {};
-    const usedTags: any = {};
+  get summary(): DocumentSummary {
+    const usedLicenses: UsedLicenseSummary = {};
     this.buckets.forEach((b, key) => {
       usedLicenses[key] = {
-        packages: b.packages.map(p => [p.name, p.version]),
+        name: b.name,
+        text: b.text,
+        packages: [...b.packages],
         tags: b.tags,
       };
-      for (const t of b.tags) {
-        const partialTags = usedTags[t] || [];
-        partialTags.push(key);
-        usedTags[t] = partialTags;
-      }
     });
 
     return {
       usedLicenses,
-      usedTags,
     };
   }
 
