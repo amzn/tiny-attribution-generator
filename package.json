@@ -1,6 +1,6 @@
 {
   "name": "tiny-attribution-generator",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "description": "An open source attribution document (credits screen) generator",
   "author": "Jacob Peddicord <peddicor@amazon.com>",
   "license": "Apache-2.0",
