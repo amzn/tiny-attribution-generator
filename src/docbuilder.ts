@@ -31,7 +31,9 @@ export default class DocBuilder {
     private licenseDictionary: LicenseDictionary = new SPDXLicenseDictionary()
   ) {}
 
-  addPackage(pkg: Package) {
+  addPackage(data: Package) {
+    const pkg = validatePackage(data);
+
     // add an identifier if not present
     if (!pkg.uuid) {
       pkg.uuid = uuidv4();
@@ -149,4 +151,60 @@ export default class DocBuilder {
     hash.update(text);
     return hash.digest('hex');
   }
+}
+
+/**
+ * Even though TypeScript enforces correct types, downstream consumers
+ * may not. Sanity check and clean up fields to ensure things are OK.
+ */
+function validatePackage<E>(input: Package<E>): Package<E> {
+  const p = {} as any;
+
+  // only copy fields we know about
+  const keys = [
+    'uuid',
+    'name',
+    'version',
+    'website',
+    'license',
+    'text',
+    'copyrights',
+    'extra',
+  ];
+  for (const key of keys) {
+    p[key] = (input as any)[key];
+    delete (input as any)[key];
+  }
+
+  // flag on leftover fields
+  const remaining = Object.keys(input);
+  if (remaining.length > 0) {
+    throw new Error(
+      `Package had leftover keys that t-a-g didn't understand: ${remaining}`
+    );
+  }
+
+  if (isEmpty(p.name)) {
+    throw new Error('Package name is empty');
+  }
+
+  if (isEmpty(p.version)) {
+    throw new Error('Package version is empty');
+  }
+
+  // if copyrights is a string, make is a single-element array
+  if (typeof p.copyrights == 'string') {
+    p.copyrights = [p.copyrights];
+  }
+
+  // must supply either the license name or the text; neither is quite useless
+  if (isEmpty(p.license) && isEmpty(p.text)) {
+    throw new Error('Must supply either/both of `license` or `text`');
+  }
+
+  return p;
+}
+
+function isEmpty(thing: string | undefined) {
+  return thing == undefined || thing.length === 0;
 }
