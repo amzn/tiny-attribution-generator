@@ -6,7 +6,7 @@ module.exports = {
   coverageDirectory: 'coverage',
   globals: {
     'ts-jest': {
-      tsConfigFile: 'tsconfig.json',
+      tsConfig: 'tsconfig.json',
     },
   },
   moduleFileExtensions: ['js', 'ts', 'json'],
@@ -14,6 +14,7 @@ module.exports = {
   testMatch: ['**/__tests__/**/*.+(ts|tsx|js)'],
   testPathIgnorePatterns: ['node_modules', 'lib'],
   transform: {
-    '^.+\\.(ts|tsx)$': 'ts-jest',
+    '^.+\\.tsx?$': 'ts-jest',
   },
+  preset: 'ts-jest',
 };
