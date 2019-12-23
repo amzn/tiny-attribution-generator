@@ -1,2 +1,5 @@
  singleQuote: true
+- name: ClearlyNoticed Action
+  uses: dabutvin/chive-action@1.1.0
+
  trailingComma: es5
