@@ -12,9 +12,16 @@ export default class JsonRenderer implements OutputRenderer<any> {
 
   render(buckets: LicenseBucket[]): any {
     return {
-      packages: buckets.map(x => x.packages).reduce((a, b) => {
-        return a.concat(b);
-      }, []),
+      packages: buckets
+        .map(x =>
+          x.packages.map(y => {
+            y.text = y.text == '' ? x.text : y.text;
+            return y;
+          })
+        )
+        .reduce((a, b) => {
+          return a.concat(b);
+        }, []),
     };
   }
 }
