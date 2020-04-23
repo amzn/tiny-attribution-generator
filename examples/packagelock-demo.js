@@ -26,11 +26,10 @@ jsonBuilder
   .then(() => jsonBuilder.build())
   .then(jsonOutput => {
     const clearlydefinedInput = {
-      coordinates: jsonOutput.packages.map(
-        x =>
-          x.name.indexOf('/') > -1
-            ? `npm/npmjs/${x.name}/${x.version}`
-            : `npm/npmjs/-/${x.name}/${x.version}`
+      coordinates: jsonOutput.packages.map(x =>
+        x.name.indexOf('/') > -1
+          ? `npm/npmjs/${x.name}/${x.version}`
+          : `npm/npmjs/-/${x.name}/${x.version}`
       ),
     };
     return clearlyDefinedBuilder.read(

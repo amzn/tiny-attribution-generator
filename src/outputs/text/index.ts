@@ -39,9 +39,7 @@ export default class TextRenderer implements OutputRenderer<string> {
 
       // output package names and copyright statements
       for (const pkg of bucket.packages) {
-        let statement = `** ${pkg.name}; version ${pkg.version} -- ${
-          pkg.website
-        }`;
+        let statement = `** ${pkg.name}; version ${pkg.version} -- ${pkg.website}`;
         if (pkg.copyrights && pkg.copyrights.length > 0) {
           statement += `\n${pkg.copyrights.join('\n')}`;
         }
