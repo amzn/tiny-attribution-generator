@@ -17,25 +17,25 @@
     "prepack": "tsc"
   },
   "dependencies": {
-    "handlebars": "^4.4.5",
+    "handlebars": "^4.7.6",
     "html-minifier": "^3.5.21",
     "lodash": "^4.17.15",
     "spdx-license-list": "^5.0.0",
     "superagent": "^4.1.0",
-    "uuid": "^3.3.2"
+    "uuid": "^3.4.0"
   },
   "devDependencies": {
     "@types/html-minifier": "^3.5.3",
-    "@types/jest": "^24.0.11",
-    "@types/lodash": "^4.14.123",
+    "@types/jest": "^24.9.1",
+    "@types/lodash": "^4.14.150",
     "@types/nock": "^9.3.1",
-    "@types/superagent": "^4.1.1",
-    "@types/uuid": "^3.4.4",
-    "jest": "^24.5.0",
+    "@types/superagent": "^4.1.7",
+    "@types/uuid": "^3.4.9",
+    "jest": "^24.9.0",
     "nock": "^10.0.6",
-    "prettier": "^1.16.4",
-    "ts-jest": "^24.0.0",
-    "tslint": "^5.14.0",
-    "typescript": "^3.3.4000"
+    "prettier": "^1.19.1",
+    "ts-jest": "^24.3.0",
+    "tslint": "^5.20.1",
+    "typescript": "^3.8.3"
   }
 }
