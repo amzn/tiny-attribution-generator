@@ -31,10 +31,10 @@
     "@types/nock": "^9.3.1",
     "@types/superagent": "^4.1.7",
     "@types/uuid": "^3.4.9",
-    "jest": "^24.9.0",
+    "jest": "^26.6.3",
     "nock": "^10.0.6",
     "prettier": "^1.19.1",
-    "ts-jest": "^24.3.0",
+    "ts-jest": "^26.4.4",
     "tslint": "^5.20.1",
     "typescript": "^3.8.3"
   }
